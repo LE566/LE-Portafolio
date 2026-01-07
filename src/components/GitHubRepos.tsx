@@ -3,6 +3,8 @@ import { FiGithub, FiExternalLink } from "react-icons/fi";
 import MetaBalls from "../Animations/MetaBalls/MetaBalls";
 import { motion } from "framer-motion";
 import ShinyText from "../TextAnimations/ShinyText/ShinyText";
+import useIsMobile from "../Hooks/useIsMobile";
+
 type Repo = {
   id: number;
   name: string;
@@ -16,6 +18,7 @@ const GitHubRepos: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetch("https://api.github.com/users/LE566/repos")
@@ -37,21 +40,15 @@ const GitHubRepos: React.FC = () => {
   if (error) return <p className="text-center my-10 text-red-400">{error}</p>;
 
   return (
+
     <section
       ref={containerRef}
       className="relative max-w-7xl mx-auto px-6 mb-40 mt-0 grid grid-cols-1 lg:grid-cols-2 gap-12"
       id="proyectos"
     >
-      {/* Fondo decorativo */}
-      <div className="absolute inset-0 -z-10 opacity-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-900/10 to-black"></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImdyaWQiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+CiAgICAgIDxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoNTksIDEzMCwgMjQ2LCAwLjEpIiBzdHJva2Utd2lkdGg9IjAuNSIvPgogICAgPC9wYXR0ZXJuPgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+Cjwvc3ZnPg==')] opacity-10"
-        ></div>
-      </div>
-
       {/* Columna izquierda (sin animación) */}
       <div className="lg:sticky lg:top-20 lg:h-[80vh] flex flex-col justify-center relative mt-20">
+        
         <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
           Mis Proyectos
         </h2>
@@ -68,13 +65,12 @@ const GitHubRepos: React.FC = () => {
 
         <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-transparent" />
 
-        {/* MetaBalls oculto en pantallas pequeñas */}
-        <div className="w-100 h-80 mb-0">
+        <div className="w-full h-80 mb-0">
           <MetaBalls
             color="#22d3ee"
             cursorBallColor="#22d3ee"
             cursorBallSize={3}
-            ballCount={18}
+            ballCount={isMobile ? 10 : 18}
             animationSize={30}
             enableMouseInteraction={true}
             enableTransparency={true}

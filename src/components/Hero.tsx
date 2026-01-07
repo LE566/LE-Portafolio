@@ -82,9 +82,9 @@ const Hero: React.FC = () => {
           className="flex flex-col items-center"
         >
           <img
-            src="/images/yo.jpg"
+            src={`${import.meta.env.BASE_URL}images/yo1.png`}
             alt="Luis Esparza"
-            className="rounded-lg shadow-xl w-40 h-40 sm:w-48 sm:h-48 md:w-40 md:h-47 object-cover border border-black"
+            className="rounded-lg shadow-xl w-30 h-35 sm:w-40 sm:h-47 md:w-40 md:h-47 object-cover border border-black"
           />
           <h2 className="mt-4 text-xl sm:text-2xl text-white font-semibold">Dev</h2>
         </motion.div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
@@ -7,12 +7,14 @@ import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import Particles from "./Backgrounds/Particles/Particles";
-import { motion } from "framer-motion";
 import ScrollVelocity from "./TextAnimations/ScrollVelocity/ScrollVelocity";
+import useIsMobile from "./Hooks/useIsMobile";
+
 
 
 
 function App() {
+  const isMobile = useIsMobile();
   // Estado para modal
   const [modalData, setModalData] = useState<{
     title: string;
@@ -36,29 +38,15 @@ function App() {
         <div className="absolute inset-0 z-0">
           <Particles
             particleColors={['#ffffff', '#00ffff']}
-            particleCount={600}
-            particleSpread={10}
-            speed={0.15}
-            particleBaseSize={100}
+            particleCount={isMobile ? 40 : 300}
+            particleSpread={isMobile ? 3 : 8}
+            speed={isMobile ? 0.10 : 0.15}
+            particleBaseSize={isMobile ? 70 : 100}
             moveParticlesOnHover={false}
             alphaParticles={true}
           />
         </div>
 
-        {/* 🌌 Rayo de luz animado desde la esquina superior derecha */}
-        <motion.div
-          initial={{ opacity: 0.2, scale: 1 }}
-          animate={{
-            opacity: [0.2, 0.4, 0.6, 0.4, 0.2],
-            scale: [1, 1.05, 1.1, 1.05, 1]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-0 right-0 w-[900px] h-[900px] bg-[radial-gradient(ellipse_at_top_right,_rgba(0,255,255,0.4),_transparent_80%)] blur-3xl rotate-45 -translate-y-1/3 translate-x-1/4 pointer-events-none z-10"
-        />
 
 
         {/* Contenido del Hero */}

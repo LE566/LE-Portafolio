@@ -31,12 +31,9 @@
   }
 }
 
-body {
-  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #00ffff);
-  background-size: 400% 400%;
-  animation: gradientMove 20s ease infinite;
-}
-html {
-  scroll-behavior: smooth;
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: black; /* o el color que quieras para el fondo */
 }
 

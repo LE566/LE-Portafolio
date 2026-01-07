@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
       {/* Botón hamburguesa para móvil */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none"
+        className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
         aria-label="Toggle menu"
       >
         <span
@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 
       {/* Menú desplegable para móvil */}
       <ul
-        className={`md:hidden absolute top-full right-4 mt-2 w-44 bg-black border border-cyan-400 rounded-lg shadow-lg transform transition-all duration-300 origin-top-right ${
+        className={`md:hidden absolute top-full left-1/2 -translate-x-1/2 mt-2 w-11/12 max-w-xs bg-black border border-cyan-400 rounded-lg shadow-lg transform transition-all duration-300 origin-top ${
           isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
         }`}
       >

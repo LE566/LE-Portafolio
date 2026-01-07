@@ -14,32 +14,32 @@ type ServicesProps = {
 const servicesData = [
   {
     title: "Desarrollo front-end",
-    img: "/images/sitio-web.png",
+    img: `${import.meta.env.BASE_URL}images/sitio-web.png`,
     description: "Ofrezco diseño web moderno, responsivo y atractivo.",
   },
   {
     title: "Aplicaciones Web",
-    img: "/images/desarrollo-de-aplicaciones (3).png",
+    img: `${import.meta.env.BASE_URL}images/desarrollo-de-aplicaciones (3).png`,
     description: "Desarrollo de aplicaciones web seguras y escalables.",
   },
   {
     title: "E-Commerce",
-    img: "/images/carrito-de-compras.png",
+    img: `${import.meta.env.BASE_URL}images/carrito-de-compras.png`,
     description: "Creación de tiendas en línea con pasarelas de pago.",
   },
   {
     title: "Desarrollo back-end",
-    img: "/images/backend (1).png",
+    img: `${import.meta.env.BASE_URL}images/backend (1).png`,
     description: "Servicios de backend para manejar datos y lógica de negocios.",
   },
   {
     title: "Testing",
-    img: "/images/libro-de-ciencia.png",
+    img: `${import.meta.env.BASE_URL}images/libro-de-ciencia.png`,
     description: "Pruebas para garantizar calidad y estabilidad de tus apps.",
   },
   {
     title: "Aplicaciones Móviles",
-    img: "/images/desarrollo-de-aplicaciones (5).png",
+    img: `${import.meta.env.BASE_URL}images/desarrollo-de-aplicaciones (5).png`,
     description: "Desarrollo de apps móviles nativas y multiplataforma.",
   },
 ];
@@ -84,13 +84,13 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
     <div
       id="Servicios"
       ref={sectionRef}
-      className="relative w-full min-h-screen z-[30]  px-4 sm:px-6 py-12 md:py-16 lg:py-40 border-b border-t border-cyan-400 bg-gradient-to-br from-black via-gray-900 to-black flex flex-col justify-center"
+      className=" w-full min-h-screen z-[30]  px-4 sm:px-6 py-12 md:py-16 lg:py-40 border-b border-t border-cyan-400 bg-gradient-to-br from-black via-gray-900 to-black  justify-center"
     >
       {/* Fondo animado de cuadros */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Squares
           speed={0.1}
-          squareSize={isMobile ? 40 : 50}
+          squareSize={isMobile ? 180 : 75}
           direction="diagonal"
           borderColor="#00ffff"
           hoverFillColor="#00ffff"
@@ -99,15 +99,15 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
 
       {/* Encabezado */}
       <AnimatedContent
-        distance={isMobile ? 80 : 120}
+        distance={isMobile ? 150 : 120}
         direction="vertical"
-        duration={0.8}
+        duration={0.5}
         ease="power3.out"
         initialOpacity={0}
-        animateOpacity={false} // Sin desvanecimiento
+        animateOpacity={true} 
         scale={0.1}
-        threshold={-0.4}
-        delay={0.1}
+        threshold={isMobile ? -0.3 : 0}
+        delay={0}
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-2">
           Mis servicios
@@ -122,15 +122,15 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
         {servicesData.map(({ title, img, description }, index) => (
           <AnimatedContent
             key={title}
-            distance={isMobile ? 60 : 100}
+            distance={isMobile ? 150 : 100}
             direction="vertical"
-            duration={0.7}
+            duration={1}
             ease="power3.out"
             initialOpacity={0}
-            animateOpacity={false} // Sin desvanecimiento
+            animateOpacity={true} 
             scale={0.1}
-            threshold={-0.4}
-            delay={0.1 + index * 0.08}
+            threshold={isMobile ? -0.4 : -0.2}
+            delay={0 + index * 0.08}
           >
             <section
               onClick={() => openModal(title, img, description)}
