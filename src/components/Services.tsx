@@ -67,51 +67,62 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
       <div className="absolute inset-0 z-0">
         <FloatingLines
           linesGradient={["#1c4fa0", "#2F4BC0", "#47f572"]}
-          animationSpeed={1.2}
-          interactive = {false}
-          bendRadius={6}
-          bendStrength={-0.7}
+          animationSpeed={isMobile ? 0.6 : 1.2} 
+          interactive={false}               // desactivar interacción con mouse en móvil
+          bendRadius={isMobile ? 3 : 6}       
+          bendStrength={isMobile ? -0.4 : -0.7}
           mouseDamping={0.1}
           parallax
-          parallaxStrength={0.3}
+          parallaxStrength={isMobile ? 0.1 : 0.3}      
+          lineCount={isMobile ? 3 : 6}      
         />
       </div>
-
 
       {/* ===== CONTENIDO (ENCIMA) ===== */}
       <div className="relative z-10">
         {/* Encabezado */}
-        <AnimatedContent
-          distance={isMobile ? 150 : 120}
-          direction="vertical"
-          duration={0.5}
-          ease="power3.out"
-          initialOpacity={0}
-          animateOpacity
-          scale={0.1}
-          threshold={0}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-2">
-            Mis servicios
-          </h2>
-          <p className="text-center text-gray-400 mb-8 sm:mb-10 max-w-xl mx-auto px-4 text-sm sm:text-base">
-            Ofrezco soluciones modernas, intuitivas y adaptadas a tus necesidades digitales.
-          </p>
-        </AnimatedContent>
+        {isMobile ? (
+          <>
+            <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-2">
+              Mis servicios
+            </h2>
+            <p className="text-center text-gray-400 mb-8 sm:mb-10 max-w-xl mx-auto px-4 text-sm sm:text-base">
+              Ofrezco soluciones modernas, intuitivas y adaptadas a tus necesidades digitales.
+            </p>
+          </>
+        ) : (
+          <AnimatedContent
+            distance={120}
+            direction="vertical"
+            duration={0.5}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.1}
+            threshold={0}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-2">
+              Mis servicios
+            </h2>
+            <p className="text-center text-gray-400 mb-8 sm:mb-10 max-w-xl mx-auto px-4 text-sm sm:text-base">
+              Ofrezco soluciones modernas, intuitivas y adaptadas a tus necesidades digitales.
+            </p>
+          </AnimatedContent>
+        )}
 
         {/* Tarjetas */}
         <div className="grid gap-5 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-2 sm:px-4 w-full">
           {servicesData.map(({ title, img, description }, index) => (
             <AnimatedContent
               key={title}
-              distance={isMobile ? 150 : 100}
+              distance={isMobile ? 0 : 100} // cero distancia en móviles
               direction="vertical"
-              duration={1}
+              duration={isMobile ? 0 : 1}
               ease="power3.out"
-              initialOpacity={0}
+              initialOpacity={isMobile ? 1 : 0}
               animateOpacity
-              scale={0.1}
-              threshold={isMobile ? -0.4 : -0.2}
+              scale={isMobile ? 1 : 0.1}
+              threshold={isMobile ? 0 : -0.2}
               delay={index * 0.08}
             >
               <section
@@ -128,7 +139,7 @@ const Services: React.FC<ServicesProps> = ({ openModal }) => {
               >
                 <ShinyText
                   text={title}
-                  disabled={false}
+                  disabled={isMobile} // desactivar shine en móviles
                   speed={3}
                   className="text-lg sm:text-xl mb-2 border-b border-cyan-500/50 pb-1"
                 />
