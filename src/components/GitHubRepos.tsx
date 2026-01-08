@@ -36,74 +36,103 @@ const GitHubRepos: React.FC = () => {
       });
   }, []);
 
-  if (loading) return <p className="text-center my-10 text-cyan-300">Cargando proyectos...</p>;
-  if (error) return <p className="text-center my-10 text-red-400">{error}</p>;
+  if (loading)
+    return <p className="text-center my-10 text-cyan-300">Cargando proyectos...</p>;
+
+  if (error)
+    return <p className="text-center my-10 text-red-400">{error}</p>;
 
   return (
-
     <section
       ref={containerRef}
-      className="relative max-w-7xl mx-auto px-6 mb-40 mt-0 grid grid-cols-1 lg:grid-cols-2 gap-12"
+      className="relative max-w-7xl mx-auto px-6 mb-40 grid grid-cols-1 lg:grid-cols-2 gap-12"
       id="proyectos"
     >
-      {/* Columna izquierda (sin animación) */}
+      {/* ===== COLUMNA IZQUIERDA ===== */}
       <div className="lg:sticky lg:top-20 lg:h-[80vh] flex flex-col justify-center relative mt-20">
-        
-        <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
-          Mis Proyectos
-        </h2>
 
-        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-          <ShinyText
-            text="Aquí encontrarás una selección de mis trabajos más recientes."
-            disabled={false}
-            speed={5}
-            className="text-xl text-gray-300 mb-0 leading-relaxed"
-          />
-          <span className="block mt-0 text-cyan-300/80">Cada proyecto representa un desafío único.</span>
-        </p>
+        {/* TEXTO → ENTRA DESDE LA IZQUIERDA */}
+        <motion.div
+          initial={{ opacity: 0, x: isMobile ? -60 : -120 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{
+            duration: isMobile ? 0.6 : 1.4,
+            delay: isMobile ? 0.05 : 0.15,
+            ease: "easeOut",
+          }}
+        >
+          <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
+            Mis Proyectos
+          </h2>
 
-        <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-transparent" />
+          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            <ShinyText
+              text="Aquí encontrarás una selección de mis trabajos más recientes."
+              disabled={false}
+              speed={5}
+              className="text-xl text-gray-300"
+            />
+            <span className="block mt-2 text-cyan-300/80">
+              Cada proyecto representa un desafío único.
+            </span>
+          </p>
 
-        <div className="w-full h-80 mb-0">
+          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-transparent mb-6" />
+        </motion.div>
+
+        {/* METABALLS → SOLO DESVANECIDO */}
+        <motion.div
+          className="w-full h-80"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{
+            duration: 1.2,
+            delay: isMobile ? 0.2 : 0.4,
+            ease: "easeOut",
+          }}
+        >
           <MetaBalls
             color="#22d3ee"
             cursorBallColor="#22d3ee"
             cursorBallSize={3}
             ballCount={isMobile ? 10 : 18}
             animationSize={30}
-            enableMouseInteraction={true}
-            enableTransparency={true}
+            enableMouseInteraction
+            enableTransparency
             hoverSmoothness={0.05}
             clumpFactor={1}
             speed={0.3}
           />
-        </div>
+        </motion.div>
       </div>
 
-      {/* Columna derecha (proyectos animados) */}
-      <div className="space-y-8 mt-0 lg:mt-45">
+      {/* ===== CARDS (RÁPIDAS) ===== */}
+      <div className="space-y-8 mt-10 lg:mt-40">
         {repos.map((repo, index) => (
           <motion.div
             key={repo.id}
             className="group relative bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-2xl border border-gray-700 hover:border-cyan-400/30 transition-all duration-300"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{
-              duration: 0.6,
-              delay: index * 0.15,
+              duration: 0.2,
+              delay: 0.15 + index * 0.01,
+              ease: "easeOut",
             }}
           >
-            {/* Efecto de borde al hover */}
-            <div className="absolute inset-0 rounded-xl border-2 border-cyan-400/0 group-hover:border-cyan-400/30 pointer-events-none transition-all duration-500"></div>
+            <div className="absolute inset-0 rounded-xl border-2 border-cyan-400/0 group-hover:border-cyan-400/30 pointer-events-none transition-all duration-500" />
 
             <h3 className="text-2xl font-bold text-cyan-300 mb-3">
               {repo.name.replace(/-/g, " ")}
             </h3>
+
             <p className="text-gray-300 mb-6">
               {repo.description || "Descripción no disponible"}
             </p>
+
             <div className="flex space-x-4">
               <a
                 href={repo.html_url}
@@ -113,6 +142,7 @@ const GitHubRepos: React.FC = () => {
               >
                 <FiGithub className="mr-2" /> Ver código
               </a>
+
               {repo.homepage && (
                 <a
                   href={repo.homepage}

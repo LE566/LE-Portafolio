@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Imagen */}
-      <div className="w-full lg:w-1/2 flex justify-center">
+      <div className="relative w-full lg:w-1/2 flex justify-center">
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}

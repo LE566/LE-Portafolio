@@ -13,6 +13,7 @@ import useIsMobile from "./Hooks/useIsMobile";
 
 
 
+
 function App() {
   const isMobile = useIsMobile();
   // Estado para modal
@@ -33,7 +34,7 @@ function App() {
       {/* Navbar fuera del contenedor de partículas */}
       <Navbar />
       <div id="hero" className="div"></div>
-      <div className="relative h-screen overflow-hidden"> {/* CONTENEDOR PRINCIPAL */}
+      <div className=" h-screen overflow-hidden"> {/* CONTENEDOR PRINCIPAL */}
         {/* Partículas de fondo */}
         <div className="absolute inset-0 z-0">
           <Particles
@@ -50,20 +51,24 @@ function App() {
 
 
         {/* Contenido del Hero */}
-        <div className="relative z-20 h-full flex items-center">
+        <div className="z-20 h-full flex items-center">
           <Hero />
         </div>
       </div>
+
 
       <Services openModal={openModal} />
 
       <GitHubRepos />
       
-      <ScrollVelocity
-        texts={['Back-end Developer', 'Front-end Developer']} 
-        velocity={100} 
-        className=" text-lg sm:text-4xl pr-15 custom-scroll-text text-cyan-400"
-      />
+      {!isMobile && (
+        <ScrollVelocity
+          texts={['Back-end Developer', 'Front-end Developer']} 
+          velocity={100} 
+          className="text-lg sm:text-4xl pr-15 custom-scroll-text text-cyan-400"
+        />
+      )}
+
       <ContactForm />
 
       <Footer />

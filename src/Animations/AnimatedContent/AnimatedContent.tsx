@@ -66,7 +66,7 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
       scrollTrigger: {
         trigger: el,
         start: `top ${startPct}%`,
-        toggleActions: "play reverse play reverse",
+        toggleActions: "play none none none",
         // once: true, // quitar o comentar esta línea para que no sea solo una vez
       },
     });
