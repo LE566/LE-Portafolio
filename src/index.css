@@ -38,12 +38,14 @@ html, body {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1440px) {
   .grecaptcha-badge { 
     margin-right: 1.7rem;    /* mover a la izquierda */
     transform: scale(0.5);    /* más pequeño */
     z-index: 1000;
   }
-}
+} 
+
+
 
 

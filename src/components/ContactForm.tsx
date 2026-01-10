@@ -51,8 +51,8 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 lg:mb-20 mt-20 p-8 sm:p-10 rounded-xl border border-cyan-500 bg-black backdrop-blur-md shadow-xl">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">
+    <section id="Formulario"  className="scroll-mt-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 lg:mb-20 mt-20 p-8 sm:p-10 rounded-xl border border-cyan-500 bg-black backdrop-blur-md shadow-xl">
+      <h2  className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">
         Contáctame
       </h2>
 
@@ -103,7 +103,7 @@ const ContactForm: React.FC = () => {
               id="email"
               name="email"
               type="email"
-              placeholder="tucorreo@ejemplo.com"
+              placeholder="correo@ejemplo.com"
               required
               className="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />

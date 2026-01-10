@@ -47,30 +47,14 @@ function App() {
             alphaParticles={true}
           />
         </div>
-
-
-
         {/* Contenido del Hero */}
         <div className="z-20 h-full flex items-center">
           <Hero />
         </div>
       </div>
-
-
       <Services openModal={openModal} />
-
       <GitHubRepos />
-      
-      {!isMobile && (
-        <ScrollVelocity
-          texts={['Back-end Developer', 'Front-end Developer']} 
-          velocity={100} 
-          className="text-lg sm:text-4xl pr-15 custom-scroll-text text-cyan-400"
-        />
-      )}
-
       <ContactForm />
-
       <Footer />
       {modalData && (
         <Modal {...modalData} closeModal={closeModal} />
