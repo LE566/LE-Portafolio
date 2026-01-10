@@ -7,7 +7,6 @@ import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import Particles from "./Backgrounds/Particles/Particles";
-import ScrollVelocity from "./TextAnimations/ScrollVelocity/ScrollVelocity";
 import useIsMobile from "./Hooks/useIsMobile";
 
 
