@@ -4,8 +4,11 @@ import Hero from "./components/Hero";
 import Particles from "./Backgrounds/Particles/Particles";
 import useIsMobile from "./Hooks/useIsMobile";
 import Lenis from "lenis";
+import { useTheme } from "./context/ThemeContext";
 
 const Services = lazy(() => import("./components/Services"));
+const FeaturedProjects = lazy(() => import("./components/FeaturedProjects"));
+const Timeline = lazy(() => import("./components/Timeline"));
 const GitHubRepos = lazy(() => import("./components/GitHubRepos"));
 const Stack = lazy(() => import("./components/Stack"));
 const Certifications = lazy(() => import("./components/Certifications"));
@@ -15,6 +18,8 @@ const Modal = lazy(() => import("./components/Modal"));
 
 function App() {
   const isMobile = useIsMobile();
+  const { theme } = useTheme();
+
   // Estado para modal
   const [modalData, setModalData] = useState<{
     title: string;
@@ -49,8 +54,12 @@ function App() {
 
   const closeModal = () => setModalData(null);
 
+  const particleColors = theme === 'dark'
+    ? ['#ffffff', '#00ffff']
+    : ['#000000', '#00aaaa']; // Black/Teal for light mode
+
   return (
-    <div className="bg-black min-h-screen text-white font-sans relative">
+    <div className="bg-zinc-50 dark:bg-black min-h-screen text-gray-900 dark:text-white font-sans relative transition-colors duration-300">
       {/* Navbar fuera del contenedor de partículas */}
       <Navbar />
       <div id="hero" className="div"></div>
@@ -58,7 +67,7 @@ function App() {
         {/* Partículas de fondo */}
         <div className="absolute inset-0 z-0">
           <Particles
-            particleColors={['#ffffff', '#00ffff']}
+            particleColors={particleColors}
             particleCount={isMobile ? 40 : 300}
             particleSpread={isMobile ? 3 : 8}
             speed={isMobile ? 0.10 : 0.15}
@@ -74,11 +83,17 @@ function App() {
       </div>
 
       <Suspense fallback={<div className="text-center py-20 text-cyan-400">Loading...</div>}>
-        <Services openModal={openModal} />
-        <Stack />
-        <Certifications />
-        <GitHubRepos />
-        <ContactForm />
+        <div className="flex flex-col gap-24 md:gap-32 pb-24">
+          <Services openModal={openModal} />
+          <FeaturedProjects />
+          <div className="flex flex-col gap-0 md:gap-8">
+            <Timeline />
+            <Stack />
+            <Certifications />
+            <GitHubRepos />
+            <ContactForm />
+          </div>
+        </div>
         <Footer />
         {modalData && (
           <Modal {...modalData} closeModal={closeModal} />

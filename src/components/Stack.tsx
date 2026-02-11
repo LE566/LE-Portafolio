@@ -11,6 +11,7 @@ import {
     FaGitAlt,
 } from "react-icons/fa";
 import { SiTailwindcss, SiTypescript, SiMongodb, SiPostgresql, SiNextdotjs, SiVite } from "react-icons/si";
+import { useLanguage } from "../context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,7 +20,7 @@ const technologies = [
     { name: "TypeScript", icon: <SiTypescript size={50} className="text-blue-500" /> },
     { name: "Tailwind", icon: <SiTailwindcss size={50} className="text-teal-400" /> },
     { name: "Node.js", icon: <FaNodeJs size={50} className="text-green-500" /> },
-    { name: "Next.js", icon: <SiNextdotjs size={50} className="text-white" /> },
+    { name: "Next.js", icon: <SiNextdotjs size={50} className="text-gray-800 dark:text-white" /> },
     { name: "Vite", icon: <SiVite size={50} className="text-purple-500" /> },
     { name: "MongoDB", icon: <SiMongodb size={50} className="text-green-400" /> },
     { name: "PostgreSQL", icon: <SiPostgresql size={50} className="text-blue-400" /> },
@@ -31,8 +32,9 @@ const technologies = [
 
 const Stack: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const { t } = useLanguage();
 
-    const isMobile = window.innerWidth < 768; // Simplest check or use hook if verified
+    const isMobile = window.innerWidth < 768;
 
     useGSAP(() => {
         const el = containerRef.current;
@@ -73,25 +75,25 @@ const Stack: React.FC = () => {
     }, { scope: containerRef, dependencies: [isMobile] });
 
     return (
-        <section id="stack" ref={containerRef} className="min-h-screen relative flex flex-col justify-center py-20 px-6">
-            {/* Background Decorations */}
+        <section id="stack" ref={containerRef} className="min-h-screen relative flex flex-col justify-center py-10 px-6 bg-zinc-50 dark:bg-transparent transition-colors duration-300">
+            {/* Background Decorations (Only for desktop or if not conflicting) */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
                 <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px]" />
                 <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] bg-blue-600/10 rounded-full blur-[100px]" />
             </div>
 
             <div className="relative z-10 w-full max-w-7xl mx-auto">
-                <h2 className="stack-title text-4xl md:text-5xl font-bold text-center text-white mb-16 opacity-0 translate-y-8">
-                    Mi <span className="text-cyan-400">Stack</span>
+                <h2 className="stack-title text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-white mb-16 opacity-0 translate-y-8">
+                    {t('stack.title')}
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 justify-items-center">
                     {technologies.map((tech) => (
                         <div
                             key={tech.name}
-                            className="stack-item flex flex-col items-center justify-center gap-4 p-6 rounded-xl bg-black/40 border border-zinc-800 hover:border-cyan-500 hover:bg-zinc-900/80 hover:shadow-[0_0_25px_rgba(34,211,238,0.1)] transition-all duration-300 group w-full max-w-[150px] aspect-square"
+                            className="stack-item flex flex-col items-center justify-center gap-4 p-6 rounded-xl bg-white dark:bg-black/40 border border-gray-200 dark:border-zinc-800 hover:border-cyan-500 hover:bg-gray-50 dark:hover:bg-zinc-900/80 hover:shadow-lg dark:hover:shadow-[0_0_25px_rgba(34,211,238,0.1)] transition-all duration-300 group w-full max-w-[150px] aspect-square"
                         >
                             <div className="transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">{tech.icon}</div>
-                            <span className="text-gray-400 font-medium group-hover:text-white transition-colors">{tech.name}</span>
+                            <span className="text-gray-700 dark:text-gray-400 font-medium group-hover:text-black dark:group-hover:text-white transition-colors">{tech.name}</span>
                         </div>
                     ))}
                 </div>

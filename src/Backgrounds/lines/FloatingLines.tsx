@@ -54,6 +54,7 @@ uniform vec2 parallaxOffset;
 
 uniform vec3 lineGradient[8];
 uniform int lineGradientCount;
+uniform vec3 uBackgroundColor;
 
 const vec3 BLACK = vec3(0.0);
 const vec3 PINK  = vec3(233.0, 71.0, 245.0) / 255.0;
@@ -126,9 +127,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     baseUv += parallaxOffset;
   }
 
-  vec3 col = vec3(0.0);
+  vec3 col = uBackgroundColor;
 
-  vec3 b = lineGradientCount > 0 ? vec3(0.0) : background_color(baseUv);
+  vec3 b = lineGradientCount > 0 ? uBackgroundColor : background_color(baseUv);
 
   vec2 mouseUv = vec2(0.0);
   if (interactive) {
@@ -225,6 +226,7 @@ type FloatingLinesProps = {
   parallax?: boolean;
   parallaxStrength?: number;
   mixBlendMode?: React.CSSProperties['mixBlendMode'];
+  backgroundColor?: string;
 };
 
 function hexToVec3(hex: string): Vector3 {
@@ -266,7 +268,8 @@ export default function FloatingLines({
   mouseDamping = 0.05,
   parallax = true,
   parallaxStrength = 0.2,
-  mixBlendMode = 'screen'
+  mixBlendMode = 'screen',
+  backgroundColor = '#000000'
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const targetMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
@@ -360,8 +363,14 @@ export default function FloatingLines({
       lineGradient: {
         value: Array.from({ length: MAX_GRADIENT_STOPS }, () => new Vector3(1, 1, 1))
       },
-      lineGradientCount: { value: 0 }
+      lineGradientCount: { value: 0 },
+      uBackgroundColor: { value: new Vector3(0, 0, 0) }
     };
+
+    if (backgroundColor) {
+      const bg = hexToVec3(backgroundColor);
+      uniforms.uBackgroundColor.value.set(bg.x, bg.y, bg.z);
+    }
 
     if (linesGradient && linesGradient.length > 0) {
       const stops = linesGradient.slice(0, MAX_GRADIENT_STOPS);
@@ -486,7 +495,8 @@ export default function FloatingLines({
     bendStrength,
     mouseDamping,
     parallax,
-    parallaxStrength
+    parallaxStrength,
+    backgroundColor
   ]);
 
   return (
