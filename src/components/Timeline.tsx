@@ -21,10 +21,27 @@ const Timeline: React.FC = () => {
         const el = containerRef.current;
         if (!el || !Array.isArray(items)) return;
 
+        if (isMobile) {
+            // On mobile, play animation immediately (ScrollTrigger conflicts with Lenis)
+            const tl = gsap.timeline({ delay: 0.3 });
+            tl.fromTo(
+                ".timeline-line",
+                { height: "0%" },
+                { height: "100%", duration: 1, ease: "power2.inOut" }
+            )
+                .fromTo(
+                    ".timeline-item",
+                    { opacity: 0, x: -30 },
+                    { opacity: 1, x: 0, duration: 0.4, stagger: 0.2, ease: "power2.out" },
+                    "-=0.8"
+                );
+            return;
+        }
+
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: el,
-                start: isMobile ? "top 85%" : "top 70%",
+                start: "top 70%",
                 toggleActions: "play none none reverse",
             }
         });
@@ -32,12 +49,12 @@ const Timeline: React.FC = () => {
         tl.fromTo(
             ".timeline-line",
             { height: "0%" },
-            { height: "100%", duration: isMobile ? 1 : 1.5, ease: "power2.inOut" }
+            { height: "100%", duration: 1.5, ease: "power2.inOut" }
         )
             .fromTo(
                 ".timeline-item",
-                { opacity: 0, x: isMobile ? -30 : -50 },
-                { opacity: 1, x: 0, duration: isMobile ? 0.4 : 0.5, stagger: isMobile ? 0.2 : 0.3, ease: "power2.out" },
+                { opacity: 0, x: -50 },
+                { opacity: 1, x: 0, duration: 0.5, stagger: 0.3, ease: "power2.out" },
                 "-=1.2"
             );
 

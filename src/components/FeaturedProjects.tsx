@@ -19,6 +19,7 @@ const FeaturedProjects: React.FC = () => {
         if (!el || !Array.isArray(items)) return;
 
         if (isMobile) {
+            gsap.set(".featured-title", { opacity: 1, y: 0 });
             gsap.set(".featured-card", { opacity: 1, y: 0 });
             return;
         }
