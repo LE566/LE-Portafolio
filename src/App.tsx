@@ -54,7 +54,7 @@ function App() {
       {/* Navbar fuera del contenedor de partículas */}
       <Navbar />
       <div id="hero" className="div"></div>
-      <div className=" h-screen overflow-hidden"> {/* CONTENEDOR PRINCIPAL */}
+      <div className="h-[100dvh] overflow-hidden relative"> {/* CONTENEDOR PRINCIPAL */}
         {/* Partículas de fondo */}
         <div className="absolute inset-0 z-0">
           <Particles

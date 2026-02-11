@@ -55,10 +55,14 @@ const Certifications: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        if (window.innerWidth < 768) return;
-
         const el = containerRef.current;
         if (!el) return;
+
+        if (window.innerWidth < 768) {
+            gsap.set(".cert-card", { opacity: 1, y: 0 });
+            gsap.set(".cert-title", { opacity: 1, y: 0 });
+            return;
+        }
 
         const tl = gsap.timeline({
             scrollTrigger: {

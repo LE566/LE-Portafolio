@@ -35,10 +35,15 @@ const Stack: React.FC = () => {
     const isMobile = window.innerWidth < 768; // Simplest check or use hook if verified
 
     useGSAP(() => {
-        if (isMobile) return;
-
         const el = containerRef.current;
         if (!el) return;
+
+        if (isMobile) {
+            // Mobile: Ensure visible immediately
+            gsap.set(".stack-item", { opacity: 1, y: 0 });
+            gsap.set(".stack-title", { opacity: 1, y: 0 });
+            return;
+        }
 
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -65,7 +70,7 @@ const Stack: React.FC = () => {
                 },
                 "-=0.4"
             );
-    }, { scope: containerRef });
+    }, { scope: containerRef, dependencies: [isMobile] });
 
     return (
         <section id="stack" ref={containerRef} className="min-h-screen relative flex flex-col justify-center py-20 px-6">
