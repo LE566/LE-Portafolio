@@ -1,10 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ContactForm: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    if (window.innerWidth < 768) return;
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+  }, { scope: containerRef });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,12 +43,6 @@ const ContactForm: React.FC = () => {
     const form = e.currentTarget as HTMLFormElement;
 
     try {
-      // Obtener token de reCAPTCHA v3
-      const token = await window.grecaptcha.execute(
-        import.meta.env.VITE_RECAPTCHA_SITE_KEY!,
-        { action: "submit" }
-      );
-
       const formData = new FormData(form);
 
       await emailjs.send(
@@ -30,7 +53,6 @@ const ContactForm: React.FC = () => {
           email: formData.get("email"),
           phone: formData.get("phone"),
           message: formData.get("message"),
-          "g-recaptcha-response": token,
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY!
       );
@@ -41,7 +63,7 @@ const ContactForm: React.FC = () => {
 
       setTimeout(() => setSuccessMessage(null), 4000);
     } catch (error) {
-      console.error("EmailJS/reCAPTCHA Error:", error);
+      console.error("EmailJS Error:", error);
       setErrorMessage("Hubo un error al enviar el correo. Intenta de nuevo.");
       setSuccessMessage(null);
       setTimeout(() => setErrorMessage(null), 4000);
@@ -51,8 +73,8 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <section id="Formulario"  className="scroll-mt-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 lg:mb-20 mt-20 p-8 sm:p-10 rounded-xl border border-cyan-500 bg-black backdrop-blur-md shadow-xl">
-      <h2  className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">
+    <section ref={containerRef} id="Formulario" className="relative z-10 scroll-mt-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 lg:mb-20 mt-20 p-8 sm:p-10 rounded-xl border border-cyan-500 bg-black backdrop-blur-md shadow-xl">
+      <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">
         Contáctame
       </h2>
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
-import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import SplitText from "../TextAnimations/SplitText/SplitText";
 import ShinyText from "../TextAnimations/ShinyText/ShinyText";
 import useIsMobile from "../Hooks/useIsMobile";
@@ -8,6 +9,33 @@ import useIsMobile from "../Hooks/useIsMobile";
 const Hero: React.FC = () => {
   const typedRef = useRef<HTMLSpanElement>(null);
   const isMobile = useIsMobile();
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    if (isMobile) return;
+
+    const tl = gsap.timeline();
+
+    tl.from(".hero-subtitle", {
+      y: -30,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power2.out"
+    })
+      .from(".hero-cta", {
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.2")
+      .from(".hero-image", {
+        scale: 0.95,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)"
+      }, "-=0.4");
+
+  }, { scope: containerRef, dependencies: [isMobile] });
 
   useEffect(() => {
     if (!typedRef.current) return;
@@ -39,6 +67,7 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
+      ref={containerRef}
       className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-20 pb-24 lg:pt-0 lg:pb-0 gap-10 lg:gap-16"
     >
       {/* ===== TEXTO ===== */}
@@ -47,14 +76,9 @@ const Hero: React.FC = () => {
         {isMobile ? (
           <h3 className="text-xl text-gray-300 mb-2">Hello, I'm</h3>
         ) : (
-          <motion.h3
-            className="text-2xl md:text-3xl text-gray-300 mb-2"
-            initial={{ y: -30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
+          <h3 className="hero-subtitle text-2xl md:text-3xl text-gray-300 mb-2">
             Hello, I'm
-          </motion.h3>
+          </h3>
         )}
 
         {/* Nombre */}
@@ -69,6 +93,7 @@ const Hero: React.FC = () => {
             delay={100}
             duration={0.6}
             ease="power3.out"
+            enableScrollTrigger={false}
           />
         )}
 
@@ -101,34 +126,16 @@ const Hero: React.FC = () => {
         )}
 
         {/* CTA */}
-        {isMobile ? (
-          <div className="flex justify-center lg:justify-start">
-            <button className="mt-6 bg-cyan-500 text-white px-6 py-2 rounded-lg text-base font-bold">
-              Download CV
-            </button>
-          </div>
-        ) : (
-          <motion.div
-            className="flex justify-center lg:justify-start"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-          >
-            <button className="mt-6 bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-lg text-lg font-bold transition duration-300">
-              Download CV
-            </button>
-          </motion.div>
-        )}
+        <div className="hero-cta flex justify-center lg:justify-start">
+          <button className={`${isMobile ? "mt-6" : "mt-6"} bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-lg ${isMobile ? "text-base" : "text-lg"} font-bold transition duration-300 transform hover:scale-105`}>
+            Download CV
+          </button>
+        </div>
       </div>
 
       {/* ===== IMAGEN ===== */}
-      <div className="relative w-full lg:w-1/2 flex justify-center">
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="flex flex-col items-center"
-        >
+      <div className="relative w-full lg:w-1/2 flex justify-center hero-image">
+        <div className="flex flex-col items-center">
           <img
             src={`${import.meta.env.BASE_URL}images/yo1.png`}
             alt="Luis Esparza"
@@ -137,7 +144,7 @@ const Hero: React.FC = () => {
           <h2 className="mt-4 text-2xl text-white font-semibold">
             Software Developer
           </h2>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

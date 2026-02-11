@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useRef, memo } from "react";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
-import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MetaBalls from "../Animations/MetaBalls/MetaBalls";
 import ShinyText from "../TextAnimations/ShinyText/ShinyText";
 import useIsMobile from "../Hooks/useIsMobile";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Repo = {
   id: number;
@@ -18,6 +22,7 @@ const GitHubRepos: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -36,6 +41,59 @@ const GitHubRepos: React.FC = () => {
       });
   }, []);
 
+  useGSAP(() => {
+    if (loading || isMobile) return;
+
+    // Title animation
+    gsap.fromTo(titleRef.current,
+      { opacity: 0, x: -120 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.4,
+        delay: 0.15,
+        ease: "easeOut",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 85%",
+        }
+      }
+    );
+
+    // Metaballs animation
+    gsap.fromTo(".metaballs-container",
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1.2,
+        delay: 0.4,
+        ease: "easeOut",
+        scrollTrigger: {
+          trigger: ".metaballs-container",
+          start: "top 85%",
+        }
+      }
+    );
+
+    // Cards animation
+    const cards = gsap.utils.toArray(".repo-card");
+    gsap.fromTo(cards,
+      { opacity: 0, y: 35 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".cards-container",
+          start: "top 80%",
+        }
+      }
+    );
+
+  }, { scope: containerRef, dependencies: [loading, isMobile] });
+
   if (loading)
     return <p className="text-center my-10 text-cyan-300">Cargando proyectos...</p>;
 
@@ -52,55 +110,27 @@ const GitHubRepos: React.FC = () => {
       <div className="lg:sticky lg:top-20 lg:h-[80vh] flex flex-col justify-center relative mt-20">
 
         {/* TEXTO */}
-        {isMobile ? (
-          <div>
-            <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
-              Mis Proyectos
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Aquí encontrarás una selección de mis trabajos más recientes.
-              <span className="block mt-2 text-cyan-300/80">
-                Cada proyecto representa un desafío único.
-              </span>
-            </p>
-            <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-transparent mb-6" />
-          </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, x: -120 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-120px" }}
-            transition={{ duration: 1.4, delay: 0.15, ease: "easeOut" }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
-              Mis Proyectos
-            </h2>
-
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              <ShinyText
-                text="Aquí encontrarás una selección de mis trabajos más recientes."
-                disabled={false}
-                speed={5}
-                className="text-xl text-gray-300"
-              />
-              <span className="block mt-2 text-cyan-300/80">
-                Cada proyecto representa un desafío único.
-              </span>
-            </p>
-
-            <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-transparent mb-6" />
-          </motion.div>
-        )}
+        <div ref={titleRef}>
+          <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
+            Mis Proyectos
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            <ShinyText
+              text="Aquí encontrarás una selección de mis trabajos más recientes."
+              disabled={false}
+              speed={5}
+              className="text-xl text-gray-300"
+            />
+            <span className="block mt-2 text-cyan-300/80">
+              Cada proyecto representa un desafío único.
+            </span>
+          </p>
+          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-transparent mb-6" />
+        </div>
 
         {/* METABALLS → SOLO DESKTOP */}
         {!isMobile && (
-          <motion.div
-            className="w-full h-80"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
-          >
+          <div className="w-full h-80 metaballs-container opacity-0">
             <MetaBalls
               color="#22d3ee"
               cursorBallColor="#22d3ee"
@@ -113,29 +143,17 @@ const GitHubRepos: React.FC = () => {
               clumpFactor={1}
               speed={0.3}
             />
-          </motion.div>
+          </div>
         )}
       </div>
 
       {/* ===== CARDS ===== */}
-      <div className="space-y-8 mt-10 lg:mt-40">
-        {repos.map((repo, index) => {
-          const CardWrapper = isMobile ? "div" : motion.div;
-
+      <div className="space-y-8 mt-10 lg:mt-40 cards-container">
+        {repos.map((repo) => {
           return (
-            <CardWrapper
+            <div
               key={repo.id}
-              className="group relative bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-2xl border border-gray-700 hover:border-cyan-400/30 transition-all duration-300"
-              {...(!isMobile && {
-                initial: { opacity: 0, y: 35 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true, margin: "-60px" },
-                transition: {
-                  duration: 0.2,
-                  delay: 0.15 + index * 0.01,
-                  ease: "easeOut",
-                },
-              })}
+              className="repo-card group relative bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-2xl border border-gray-700 hover:border-cyan-400/30 transition-all duration-300"
             >
               <div className="absolute inset-0 rounded-xl border-2 border-cyan-400/0 group-hover:border-cyan-400/30 pointer-events-none transition-all duration-500" />
 
@@ -168,7 +186,7 @@ const GitHubRepos: React.FC = () => {
                   </a>
                 )}
               </div>
-            </CardWrapper>
+            </div>
           );
         })}
       </div>

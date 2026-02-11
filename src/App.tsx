@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState, Suspense, lazy, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Services from "./components/Services";
-import GitHubRepos from "./components/GitHubRepos";
-import ContactForm from "./components/ContactForm";
-import Footer from "./components/Footer";
-import Modal from "./components/Modal";
 import Particles from "./Backgrounds/Particles/Particles";
 import useIsMobile from "./Hooks/useIsMobile";
+import Lenis from "lenis";
 
-
-
-
+const Services = lazy(() => import("./components/Services"));
+const GitHubRepos = lazy(() => import("./components/GitHubRepos"));
+const Stack = lazy(() => import("./components/Stack"));
+const Certifications = lazy(() => import("./components/Certifications"));
+const ContactForm = lazy(() => import("./components/ContactForm"));
+const Footer = lazy(() => import("./components/Footer"));
+const Modal = lazy(() => import("./components/Modal"));
 
 function App() {
   const isMobile = useIsMobile();
@@ -22,6 +22,27 @@ function App() {
     description: string;
   } | null>(null);
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   const openModal = (title: string, imgSrc: string, description: string) => {
     setModalData({ title, imgSrc, description });
   };
@@ -29,7 +50,7 @@ function App() {
   const closeModal = () => setModalData(null);
 
   return (
-    <div className="bg-black min-h-screen text-white font-sans">
+    <div className="bg-black min-h-screen text-white font-sans relative">
       {/* Navbar fuera del contenedor de partículas */}
       <Navbar />
       <div id="hero" className="div"></div>
@@ -51,13 +72,18 @@ function App() {
           <Hero />
         </div>
       </div>
-      <Services openModal={openModal} />
-      <GitHubRepos />
-      <ContactForm />
-      <Footer />
-      {modalData && (
-        <Modal {...modalData} closeModal={closeModal} />
-      )}
+
+      <Suspense fallback={<div className="text-center py-20 text-cyan-400">Loading...</div>}>
+        <Services openModal={openModal} />
+        <Stack />
+        <Certifications />
+        <GitHubRepos />
+        <ContactForm />
+        <Footer />
+        {modalData && (
+          <Modal {...modalData} closeModal={closeModal} />
+        )}
+      </Suspense>
     </div>
   );
 }
