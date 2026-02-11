@@ -8,7 +8,7 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black border-t border-cyan-400/20 text-gray-300">
+    <footer className="relative z-10 bg-black border-t border-cyan-400/20 text-gray-300">
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
 
         {/* ===== BRAND ===== */}
