@@ -76,14 +76,14 @@ const Stack: React.FC = () => {
             </div>
 
             <div className="relative z-10 w-full max-w-7xl mx-auto">
-                <h2 className="stack-title text-4xl md:text-5xl font-bold text-center text-white mb-16">
-                    Mi <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Stack</span>
+                <h2 className="stack-title text-4xl md:text-5xl font-bold text-center text-white mb-16 opacity-0 translate-y-8">
+                    Mi <span className="text-cyan-400">Stack</span>
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 justify-items-center">
                     {technologies.map((tech) => (
                         <div
                             key={tech.name}
-                            className="stack-item flex flex-col items-center justify-center gap-4 p-6 rounded-2xl bg-zinc-900/30 border border-white/5 backdrop-blur-md hover:border-cyan-500/50 hover:bg-zinc-800/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all duration-300 group w-full max-w-[150px] aspect-square"
+                            className="stack-item flex flex-col items-center justify-center gap-4 p-6 rounded-xl bg-black/40 border border-zinc-800 hover:border-cyan-500 hover:bg-zinc-900/80 hover:shadow-[0_0_25px_rgba(34,211,238,0.1)] transition-all duration-300 group w-full max-w-[150px] aspect-square"
                         >
                             <div className="transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">{tech.icon}</div>
                             <span className="text-gray-400 font-medium group-hover:text-white transition-colors">{tech.name}</span>

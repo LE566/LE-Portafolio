@@ -60,31 +60,40 @@ const Certifications: React.FC = () => {
         const el = containerRef.current;
         if (!el) return;
 
-        gsap.fromTo(
-            ".cert-card",
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1,
-                y: 0,
-                stagger: 0.2,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse",
-                },
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: el,
+                start: "top 85%",
+                toggleActions: "play none none reverse",
             }
-        );
+        });
+
+        tl.fromTo(
+            ".cert-title",
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+        )
+            .fromTo(
+                ".cert-card",
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.2,
+                    duration: 0.8,
+                    ease: "power2.out",
+                },
+                "-=0.6"
+            );
     }, { scope: containerRef });
 
     return (
         <section id="certificaciones" ref={containerRef} className="relative z-10 py-20 px-6 max-w-7xl mx-auto bg-black/50">
             <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="cert-title text-4xl font-bold text-white mb-4 opacity-0 translate-y-8">
                     <span className="text-cyan-400">Certificaciones</span> y Logros
                 </h2>
-                <p className="text-gray-400 max-w-2xl mx-auto">
+                <p className="cert-title text-gray-400 max-w-2xl mx-auto opacity-0 translate-y-8">
                     Aprendizaje continuo para mantenerme al día con las últimas tecnologías.
                 </p>
             </div>
