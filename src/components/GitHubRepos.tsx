@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { useLanguage } from "../context/LanguageContext";
-import { useTheme } from "../context/ThemeContext";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,7 +26,6 @@ const GitHubRepos: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
-  const { theme } = useTheme();
 
   const isMobile = window.innerWidth < 768; // Simplest check
 
