@@ -105,9 +105,10 @@ export const translations = {
         nav: {
             home: "Home",
             services: "Services",
+            projects: "Projects",
+            timeline: "Journey",
             stack: "Stack",
             certifications: "Certifications",
-            projects: "Projects",
             contact: "Contact",
         },
         hero: {
