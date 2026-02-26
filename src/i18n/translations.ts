@@ -75,11 +75,28 @@ export const translations = {
         },
         timeline: {
             title: "Mi Trayectoria",
-            subtitle: "El camino que he recorrido hasta ahora.",
+            subtitle: "El camino académico y profesional que he recorrido hasta ahora.",
             items: [
-                { year: "2024 - Presente", title: "Freelance Developer", desc: "Desarrollo de soluciones web a medida para clientes internacionales." },
-                { year: "2023", title: "Certificación Meta Frontend", desc: "Especialización en React y ecosistema moderno de JavaScript." },
-                { year: "2022", title: "Inicios en Programación", desc: "Primeros pasos con HTML, CSS y JavaScript." }
+                { 
+                    year: "2023 - 2026", 
+                    title: "Ingeniería en TI e Innovación Digital", 
+                    desc: "Universidad Tecnológica de Calvillo (UTC). Área: Desarrollo de Software. Promedio destacado de 9.9, con enfoque en soluciones escalables y eficientes." 
+                },
+                { 
+                    year: "Sep 2024 - Dic 2024", 
+                    title: "Desarrollador Mobile IoT - SmartStream", 
+                    desc: "Creé un sistema IoT para monitoreo y control de agua. Desarrollé la app móvil con React Native (TypeScript) y la integré con hardware Arduino y bases de datos para automatizar el sistema." 
+                },
+                { 
+                    year: "Sep 2025 - Oct 2025", 
+                    title: "Desarrollador de Software y Sistemas Embebidos - CanSat", 
+                    desc: "Programé software en C++ y MicroPython para una Raspberry Pi Pico en un picosatélite. Integré sensores y comunicación LoRa para la transmisión de telemetría atmosférica en tiempo real." 
+                },
+                { 
+                    year: "Sep 2025 - Dic 2025", 
+                    title: "Desarrollador de Inteligencia Artificial - MediAI+", 
+                    desc: "Desarrollé un clasificador de cáncer de mama mediante Deep Learning usando CNN y Transfer Learning con VGG16. Implementé una API REST con Flask para inferencia en tiempo real de imágenes médicas." 
+                }
             ]
         },
         testimonials: {
@@ -93,11 +110,51 @@ export const translations = {
         },
         featured: {
             title: "Proyectos Destacados",
-            subtitle: "Una mirada más profunda a mis mejores trabajos.",
+            subtitle: "Una mirada más profunda a mis mejores trabajos en IA, IoT y Desarrollo.",
             items: [
-                { title: "E-Commerce Dashboard", desc: "Panel de administración completo con gráficos en tiempo real y gestión de inventario.", tech: ["React", "Tailwind", "Node.js"] },
-                { title: "SaaS Landing Page", desc: "Página de aterrizaje de alta conversión con animaciones avanzadas y optimización SEO.", tech: ["Next.js", "Framer Motion", "TypeScript"] },
-                { title: "Chat en Tiempo Real", desc: "Aplicación de mensajería instantánea con salas privadas y notificaciones push.", tech: ["Socket.io", "React", "Express"] }
+                { 
+                    title: "MediAI+", 
+                    desc: "Desarrollé un clasificador de cáncer de mama mediante Deep Learning usando CNN y Transfer Learning con VGG16 en TensorFlow y Keras. Implementé una API REST con Flask para la inferencia automatizada.", 
+                    tech: ["TensorFlow", "Keras", "Flask", "Python"],
+                    github: "https://github.com/tu-usuario/mediai",
+                    demo: "https://mediai-demo.com",
+                    images: [
+                        "./images/mediai-0.png", 
+                        "./images/mediai-1.png", 
+                        "./images/mediai-2.png",
+                        "./images/mediai-3.png",
+                        "./images/mediai-4.png"
+                    ] 
+                },
+                { 
+                    title: "CanSat", 
+                    desc: "Desarrollé un picosatélite para la adquisición y transmisión de datos atmosféricos en tiempo real. Implementé el software en Raspberry Pi Pico integrando sensores y comunicación LoRa.", 
+                    tech: ["C++", "MicroPython", "Raspberry Pi Pico", "LoRa"],
+                    github: "https://github.com/tu-usuario/cansat",
+                    images: [
+                        "./images/cansat-0.png", 
+                        "./images/cansat-1.png",
+                        "./images/cansat-2.jpeg",
+                        "./images/cansat-3.jpeg",
+                        "./images/cansat-4.jpeg",    
+                        "./images/cansat-5.jpeg",
+                    ]
+                },
+                { 
+                    title: "SmartStream", 
+                    desc: "Desarrollé un sistema IoT para el monitoreo y control del consumo de agua. Implementé la aplicación móvil con React Native y control físico mediante Arduino.", 
+                    tech: ["React Native", "TypeScript", "Arduino", "IoT"],
+                    github: "https://github.com/tu-usuario/smartstream",
+                    images: [
+                        "./images/smartstream-0.png", 
+                        "./images/smartstream-1.png", 
+                        "./images/smartstream-2.png",
+                        "./images/smartstream-3.png",
+                        "./images/smartstream-4.png",
+                        "./images/smartstream-5.png",
+                        "./images/smartstream-6.png"
+                    ]
+                }
             ]
         }
     },
@@ -175,11 +232,28 @@ export const translations = {
         },
         timeline: {
             title: "My Journey",
-            subtitle: "The path I've walked so far.",
+            subtitle: "My academic and professional path so far.",
             items: [
-                { year: "2024 - Present", title: "Freelance Developer", desc: "Developing custom web solutions for international clients." },
-                { year: "2023", title: "Meta Frontend Certification", desc: "Specialization in React and modern JavaScript ecosystem." },
-                { year: "2022", title: "Programming Beginnings", desc: "First steps with HTML, CSS, and JavaScript." }
+                { 
+                    year: "2023 - 2026", 
+                    title: "B.S. in Information Technology Engineering", 
+                    desc: "Universidad Tecnológica de Calvillo (UTC). Major: Software Development. Graduated with an outstanding 9.9 Average, focusing on efficient and scalable solutions." 
+                },
+                { 
+                    year: "Sep 2024 - Dec 2024", 
+                    title: "Mobile IoT Developer - SmartStream", 
+                    desc: "Built an IoT water monitoring system. Developed the mobile app with React Native (TypeScript) and integrated it with Arduino hardware and databases for system automation." 
+                },
+                { 
+                    year: "Sep 2025 - Oct 2025", 
+                    title: "Embedded Systems Developer - CanSat", 
+                    desc: "Programmed C++ and MicroPython software for a Raspberry Pi Pico on a picosatellite. Integrated sensors and LoRa wireless communication for real-time atmospheric telemetry." 
+                },
+                { 
+                    year: "Sep 2025 - Dec 2025", 
+                    title: "Artificial Intelligence Developer - MediAI+", 
+                    desc: "Developed a breast cancer classifier using Deep Learning (CNN & VGG16 Transfer Learning). Implemented a Flask REST API for real-time automated inference of medical images." 
+                }
             ]
         },
         testimonials: {
@@ -193,11 +267,51 @@ export const translations = {
         },
         featured: {
             title: "Featured Projects",
-            subtitle: "A deeper look at my best work.",
+            subtitle: "A deeper look at my best work in AI, IoT, and Development.",
             items: [
-                { title: "E-Commerce Dashboard", desc: "Complete admin dashboard with real-time charts and inventory management.", tech: ["React", "Tailwind", "Node.js"] },
-                { title: "SaaS Landing Page", desc: "High-conversion landing page with advanced animations and SEO optimization.", tech: ["Next.js", "Framer Motion", "TypeScript"] },
-                { title: "Real-Time Chat", desc: "Instant messaging application with private rooms and push notifications.", tech: ["Socket.io", "React", "Express"] }
+                { 
+                    title: "MediAI+", 
+                    desc: "Developed a breast cancer classifier using Deep Learning with CNN and Transfer Learning (VGG16) in TensorFlow and Keras. Implemented a REST API using Flask for automated inference.", 
+                    tech: ["TensorFlow", "Keras", "Flask", "Python"],
+                    github: "https://github.com/tu-usuario/mediai",
+                    demo: "https://mediai-demo.com",
+                    images: [
+                        "./images/mediai-0.png", 
+                        "./images/mediai-1.png", 
+                        "./images/mediai-2.png",
+                        "./images/mediai-3.png",
+                        "./images/mediai-4.png"
+                    ] 
+                },
+                { 
+                    title: "CanSat", 
+                    desc: "Developed a picosatellite for real-time acquisition and transmission of atmospheric data. Implemented embedded software on Raspberry Pi Pico integrating sensors and LoRa communication.", 
+                    tech: ["C++", "MicroPython", "Raspberry Pi Pico", "LoRa"],
+                    github: "https://github.com/tu-usuario/cansat",
+                    images: [
+                        "./images/cansat-0.png", 
+                        "./images/cansat-1.png",
+                        "./images/cansat-2.jpeg",
+                        "./images/cansat-3.jpeg",
+                        "./images/cansat-4.jpeg",    
+                        "./images/cansat-5.jpeg",
+                    ]
+                },
+                { 
+                    title: "SmartStream", 
+                    desc: "Developed an IoT system for real-time monitoring and control of water consumption. Implemented the mobile application using React Native and hardware control via Arduino.", 
+                    tech: ["React Native", "TypeScript", "Arduino", "IoT"],
+                    github: "https://github.com/tu-usuario/smartstream",
+                    images: [
+                        "./images/smartstream-0.png", 
+                        "./images/smartstream-1.png", 
+                        "./images/smartstream-2.png",
+                        "./images/smartstream-3.png",
+                        "./images/smartstream-4.png",
+                        "./images/smartstream-5.png",
+                        "./images/smartstream-6.png"
+                    ]
+                }
             ]
         }
     },

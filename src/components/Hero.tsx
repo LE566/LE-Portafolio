@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -11,7 +11,22 @@ const Hero: React.FC = () => {
   const typedRef = useRef<HTMLSpanElement>(null);
   const isMobile = useIsMobile();
   const containerRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null); // Referencia para cerrar el menú
   const { t, language } = useLanguage();
+
+  // Estado para el menú desplegable
+  const [showCVDropdown, setShowCVDropdown] = useState(false);
+
+  // Efecto para cerrar el dropdown si se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowCVDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useGSAP(() => {
     if (isMobile) return;
@@ -66,6 +81,23 @@ const Hero: React.FC = () => {
 
     return () => typed.destroy();
   }, [isMobile, language, t]);
+
+  // Función para manejar la descarga específica
+  const downloadSpecificCV = (lang: 'en' | 'es') => {
+    // Asegúrate de tener los archivos en public/docs/
+    const cvUrl = lang === 'en' 
+      ? `${import.meta.env.BASE_URL}docs/LuisEnriqueVillalobosEsparza_CV_EN.pdf` 
+      : `${import.meta.env.BASE_URL}docs/LuisEnriqueVillalobosEsparza_CV_ES.pdf`;
+      
+    const link = document.createElement("a");
+    link.href = cvUrl;
+    link.download = `Luis_Esparza_CV_${lang.toUpperCase()}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    setShowCVDropdown(false);
+  };
 
   return (
     <section
@@ -127,11 +159,39 @@ const Hero: React.FC = () => {
           />
         )}
 
-        {/* CTA */}
-        <div className="hero-cta flex justify-center lg:justify-start">
-          <button className={`${isMobile ? "mt-6" : "mt-6"} bg-cyan-600 dark:bg-cyan-500 hover:bg-cyan-700 dark:hover:bg-cyan-600 text-white px-6 py-2 rounded-lg ${isMobile ? "text-base" : "text-lg"} font-bold transition duration-300 transform hover:scale-105`}>
+        {/* CTA con Dropdown */}
+        <div className="hero-cta relative flex flex-col items-center lg:items-start mt-6" ref={dropdownRef}>
+          <button 
+            onClick={() => setShowCVDropdown(!showCVDropdown)}
+            className={`bg-cyan-600 dark:bg-cyan-500 hover:bg-cyan-700 dark:hover:bg-cyan-600 text-white px-6 py-2 rounded-lg ${isMobile ? "text-base" : "text-lg"} font-bold transition duration-300 transform hover:scale-105 flex items-center gap-2`}
+          >
             {t('hero.download_cv')}
+            {/* Ícono de flecha que rota cuando el menú se abre */}
+            <svg 
+              className={`w-4 h-4 transition-transform duration-300 ${showCVDropdown ? 'rotate-180' : ''}`} 
+              fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
           </button>
+
+          {/* Menú Dropdown con animación suave de Tailwind */}
+          <div 
+            className={`absolute top-full mt-2 w-52 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 transition-all duration-300 transform origin-top ${showCVDropdown ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}
+          >
+            <button 
+              onClick={() => downloadSpecificCV('es')}
+              className="w-full text-left px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-t-lg transition-colors border-b border-gray-100 dark:border-gray-700"
+            >
+              CV en Español
+            </button>
+            <button 
+              onClick={() => downloadSpecificCV('en')}
+              className="w-full text-left px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-b-lg transition-colors"
+            >
+              CV in English
+            </button>
+          </div>
         </div>
       </div>
 

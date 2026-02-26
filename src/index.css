@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @keyframes shine {
@@ -21,7 +24,70 @@
 .lg\:scrollbar-hide::-webkit-scrollbar {
   display: none;
 } */
+/* ---------- ESTILOS SWIPER (TEMA TAILWIND) ---------- */
 
+.featured-swiper {
+  /* Tamaño de flecha un poco más sutil y elegante */
+  --swiper-navigation-size: 28px; 
+}
+
+/* --- 1. Flechas base (Sin fondo) --- */
+.featured-swiper .swiper-button-next,
+.featured-swiper .swiper-button-prev {
+  background: transparent !important;
+  color: #22d3ee;
+  transition: all 0.3s ease;
+  opacity: 0; /* Se ocultan si el mouse no está en la imagen */
+  filter: drop-shadow(0px 2px 4px rgba(255, 255, 255, 0.6)); /* Sombra clara para que no se pierdan en fondos oscuros */
+}
+
+/* Flechas en Modo Oscuro */
+.dark .featured-swiper .swiper-button-next,
+.dark .featured-swiper .swiper-button-prev {
+  color: #22d3ee; 
+  filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.8)); /* Sombra oscura para fondos claros */
+}
+
+/* Aparecen al pasar el mouse por el carrusel */
+.featured-swiper:hover .swiper-button-next,
+.featured-swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+/* --- 2. Efecto Hover en las flechas (Cyan del tema) --- */
+.featured-swiper .swiper-button-next:hover,
+.featured-swiper .swiper-button-prev:hover {
+  color: #0891b2 !important; /* text-cyan-600 */
+  transform: scale(1.15);
+}
+
+.dark .featured-swiper .swiper-button-next:hover,
+.dark .featured-swiper .swiper-button-prev:hover {
+  color: #22d3ee !important; /* text-cyan-400 */
+}
+
+/* --- 3. Puntitos de Paginación --- */
+.featured-swiper .swiper-pagination-bullet {
+  background-color: #9ca3af; /* bg-gray-400 */
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.dark .featured-swiper .swiper-pagination-bullet {
+  background-color: #71717a; /* bg-zinc-500 */
+}
+
+/* Puntito Activo estilo "píldora" con tu color Cyan */
+.featured-swiper .swiper-pagination-bullet-active {
+  background-color: #22d3ee; /* bg-cyan-600 */
+  opacity: 1;
+  width: 24px;
+  border-radius: 8px;
+}
+
+.dark .featured-swiper .swiper-pagination-bullet-active {
+  background-color: #22d3ee; /* bg-cyan-400 */
+}
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;

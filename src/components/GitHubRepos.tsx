@@ -93,8 +93,6 @@ const GitHubRepos: React.FC = () => {
   return (
     <section id="proyectos" ref={containerRef} className="relative py-10 px-6 bg-zinc-50 dark:bg-black transition-colors duration-300 overflow-hidden">
       {/* Background */}
-      {/* Background */}
-      {/* Background */}
       <div className="absolute inset-0 z-0 opacity-10 dark:opacity-50 pointer-events-none overflow-hidden">
         {/* MetaBalls removed as per user request */}
       </div>
